@@ -1,0 +1,249 @@
+<UserControl x:Class="POS.Desktop.Views.ShellView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:POS.Desktop.ViewModels"
+             xmlns:views="clr-namespace:POS.Desktop.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <UserControl.Resources>
+        <!-- DataTemplates for ViewModels to Views Mapping -->
+        <DataTemplate DataType="{x:Type vm:LoginViewModel}">
+            <views:LoginView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ChangePasswordViewModel}">
+            <views:ChangePasswordView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PosViewModel}">
+            <views:PosView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SalesManagementViewModel}">
+            <views:SalesManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProductManagementViewModel}">
+            <views:ProductManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CategoryManagementViewModel}">
+            <views:CategoryManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InventoryManagementViewModel}">
+            <views:InventoryManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PurchaseManagementViewModel}">
+            <views:PurchaseManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SupplierManagementViewModel}">
+            <views:SupplierManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CustomerManagementViewModel}">
+            <views:CustomerManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DueManagementViewModel}">
+            <views:DueManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ExpenseManagementViewModel}">
+            <views:ExpenseManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:SalesReturnViewModel}">
+            <views:SalesReturnView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:DiscountManagementViewModel}">
+            <views:DiscountManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CashManagementViewModel}">
+            <views:CashManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:WorkerManagementViewModel}">
+            <views:WorkerManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ReportsViewModel}">
+            <views:ReportsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:InvoiceManagementViewModel}">
+            <views:InvoiceManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BarcodeManagementViewModel}">
+            <views:BarcodeManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BusinessSettingsViewModel}">
+            <views:BusinessSettingsView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:UserManagementViewModel}">
+            <views:UserManagementView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ActivityLogViewModel}">
+            <views:ActivityLogView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BackupRestoreViewModel}">
+            <views:BackupRestoreView />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource WindowBgBrush}">
+        <!-- Check if authenticated: if not, show Login full screen -->
+        <ContentControl Content="{Binding Navigation.CurrentViewModel}">
+            <ContentControl.Style>
+                <Style TargetType="ContentControl">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Session.IsAuthenticated}" Value="False">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <!-- Main Authenticated Layout -->
+        <Grid>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Session.IsAuthenticated}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 1. LEFT SIDEBAR -->
+            <Border Grid.Column="0" Background="{StaticResource SidebarBgBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,1,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Sidebar Brand Header -->
+                    <Border Grid.Row="0" BorderBrush="#1E293B" BorderThickness="0,0,0,1" Padding="18,0">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Path Data="{StaticResource IconCart}" Fill="{StaticResource PrimaryLightBrush}" Width="24" Height="24" Stretch="Uniform" Margin="0,0,10,0"/>
+                            <StackPanel>
+                                <TextBlock Text="NexPOS" Foreground="#FFFFFF" FontWeight="Bold" FontSize="18" />
+                                <TextBlock Text="Enterprise POS" Foreground="{StaticResource SidebarTextBrush}" FontSize="11" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Navigation Items List -->
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <ListBox ItemsSource="{Binding NavItems}"
+                                 SelectedItem="{Binding SelectedNavItem, Mode=TwoWay}"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 Padding="8">
+                            <ListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="Padding" Value="12,10" />
+                                    <Setter Property="Margin" Value="0,2" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                                    <ContentPresenter />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="border" Property="Background" Value="{StaticResource SidebarItemHoverBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter TargetName="border" Property="Background" Value="{StaticResource SidebarItemActiveBrush}" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <Path Data="{Binding IconKey, Converter={StaticResource StringToGeometry}}" Fill="#FFFFFF" Width="18" Height="18" Stretch="Uniform" Margin="0,0,12,0" Opacity="0.9"/>
+                                        <TextBlock Text="{Binding Title}" Foreground="#FFFFFF" FontSize="{StaticResource FontSizeBody}" FontWeight="Medium" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </ScrollViewer>
+
+                    <!-- Sidebar Footer (User Info & Logout) -->
+                    <Border Grid.Row="2" BorderBrush="#1E293B" BorderThickness="0,1,0,0" Padding="16" Background="#0B1120">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="{Binding Session.CurrentUser.FullName}" Foreground="#FFFFFF" FontWeight="SemiBold" FontSize="{StaticResource FontSizeBody}" TextTrimming="CharacterEllipsis"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                    <Border Background="{StaticResource PrimaryDarkBrush}" CornerRadius="4" Padding="6,2">
+                                        <TextBlock Text="{Binding Session.CurrentUser.Role}" Foreground="#FFFFFF" FontSize="10" FontWeight="Bold" />
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                            <Button Grid.Column="1" Command="{Binding LogoutCommand}" Style="{StaticResource OutlinedButtonStyle}" Padding="8" BorderThickness="0" Background="#1E293B" ToolTip="Logout">
+                                <Path Data="{StaticResource IconLogout}" Fill="#EF4444" Width="16" Height="16" Stretch="Uniform" />
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- 2. MAIN CONTENT AREA (Header + View) -->
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="65" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Top Header -->
+                <Border Grid.Row="0" Background="{StaticResource HeaderBgBrush}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1" Padding="24,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Active Module Title -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding Navigation.CurrentViewName}" Style="{StaticResource SectionTitleStyle}" />
+                        </StackPanel>
+
+                        <!-- Header Right Controls -->
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <!-- Live Cash Session Badge -->
+                            <Border Background="{StaticResource SuccessLightBrush}" BorderBrush="{StaticResource SuccessBrush}" BorderThickness="1" CornerRadius="6" Padding="12,6" Margin="0,0,12,0"
+                                    Visibility="{Binding Session.CurrentCashSession, Converter={StaticResource NullToVis}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Path Data="{StaticResource IconCash}" Fill="{StaticResource SuccessBrush}" Width="16" Height="16" Stretch="Uniform" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Register Cash: " Foreground="{StaticResource SuccessBrush}" FontSize="{StaticResource FontSizeSmall}" />
+                                    <TextBlock Text="{Binding Session.CurrentCashSession.ExpectedCash, StringFormat='৳{0:F2}'}" Foreground="{StaticResource SuccessBrush}" FontWeight="Bold" FontSize="{StaticResource FontSizeSmall}" />
+                                </StackPanel>
+                            </Border>
+
+                            <Button Content="Change Password" Command="{Binding OpenChangePasswordCommand}" Style="{StaticResource OutlinedButtonStyle}" Margin="0,0,8,0" FontSize="{StaticResource FontSizeSmall}" />
+                            <Button Content="Sign Out" Command="{Binding LogoutCommand}" Style="{StaticResource DangerButtonStyle}" FontSize="{StaticResource FontSizeSmall}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Dynamic Content View -->
+                <ContentControl Grid.Row="1" Content="{Binding Navigation.CurrentViewModel}" Margin="20" />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

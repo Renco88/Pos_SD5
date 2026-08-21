@@ -1,0 +1,11 @@
+D:\Learning\Pos_SD5\src\POS.Domain\bin\Debug\net10.0\POS.Domain.deps.json
+D:\Learning\Pos_SD5\src\POS.Domain\bin\Debug\net10.0\POS.Domain.dll
+D:\Learning\Pos_SD5\src\POS.Domain\bin\Debug\net10.0\POS.Domain.pdb
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\POS.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\POS.Domain.AssemblyInfoInputs.cache
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\POS.Domain.AssemblyInfo.cs
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\POS.Domain.csproj.CoreCompileInputs.cache
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\POS.Domain.dll
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\refint\POS.Domain.dll
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\POS.Domain.pdb
+D:\Learning\Pos_SD5\src\POS.Domain\obj\Debug\net10.0\ref\POS.Domain.dll

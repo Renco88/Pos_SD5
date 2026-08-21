@@ -1,0 +1,39 @@
+<UserControl x:Class="POS.Desktop.Views.InventoryManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Border Style="{StaticResource CardStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Low Stock &amp; Inventory Alerts" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
+                        <Border Background="{StaticResource WarningLightBrush}" BorderBrush="{StaticResource WarningBrush}" BorderThickness="1" CornerRadius="12" Padding="10,4" Margin="12,0,0,0">
+                            <TextBlock Text="{Binding LowStockProducts.Count, StringFormat='{}{0} items below minimum threshold'}" Foreground="{StaticResource WarningBrush}" FontWeight="SemiBold" FontSize="{StaticResource FontSizeSmall}" />
+                        </Border>
+                    </StackPanel>
+                    <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
+                </Grid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding LowStockProducts}" Style="{StaticResource ModernDataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="*" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="SKU" Binding="{Binding SKU}" Width="140" />
+                        <DataGridTextColumn Header="Barcode" Binding="{Binding Barcode}" Width="140" />
+                        <DataGridTextColumn Header="Current Stock" Binding="{Binding StockQuantity}" Width="120" FontWeight="Bold" />
+                        <DataGridTextColumn Header="Min Alert Level" Binding="{Binding MinStockLevel}" Width="120" />
+                        <DataGridTextColumn Header="Category" Binding="{Binding CategoryName}" Width="160" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

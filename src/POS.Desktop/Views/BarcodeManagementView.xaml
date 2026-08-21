@@ -1,0 +1,35 @@
+<UserControl x:Class="POS.Desktop.Views.BarcodeManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Border Style="{StaticResource CardStyle}" Width="500" HorizontalAlignment="Left">
+            <StackPanel>
+                <TextBlock Text="Barcode Generator &amp; Label Printing" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,16"/>
+
+                <TextBlock Text="Product Code / SKU / Barcode:" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                <Grid Margin="0,0,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding Code, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                    <Button Grid.Column="2" Content="Generate" Command="{Binding GenerateCommand}" Style="{StaticResource PrimaryButtonStyle}" />
+                </Grid>
+
+                <Border Background="#FFFFFF" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" CornerRadius="6" Padding="20" Margin="0,0,0,20">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Path Data="{StaticResource IconBarcode}" Fill="#111827" Width="180" Height="80" Stretch="Uniform" Margin="0,0,0,8" />
+                        <TextBlock Text="{Binding Code}" FontFamily="{StaticResource MonoFontFamily}" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+
+                <Button Content="Print Barcode Labels" Style="{StaticResource OutlinedButtonStyle}" Height="40" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

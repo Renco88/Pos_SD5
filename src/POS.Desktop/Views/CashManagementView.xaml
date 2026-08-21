@@ -1,0 +1,45 @@
+<UserControl x:Class="POS.Desktop.Views.CashManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Border Style="{StaticResource CardStyle}">
+            <StackPanel>
+                <Grid Margin="0,0,0,20">
+                    <TextBlock Text="Cash Register &amp; Shift Management" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
+                    <Button Content="Refresh Status" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
+                </Grid>
+
+                <!-- Active Session Banner -->
+                <Border Background="{StaticResource PrimaryUltraLightBrush}" BorderBrush="{StaticResource PrimaryLightBrush}" BorderThickness="1" CornerRadius="8" Padding="20" Margin="0,0,0,24">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Active Register Session" FontWeight="Bold" FontSize="{StaticResource FontSizeSubheader}" Foreground="{StaticResource PrimaryDarkBrush}" />
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <TextBlock Text="Cashier: " Foreground="{StaticResource TextSecondaryBrush}" />
+                                <TextBlock Text="{Binding CurrentSession.WorkerName}" FontWeight="SemiBold" Margin="0,0,16,0" />
+                                <TextBlock Text="Opening Float: " Foreground="{StaticResource TextSecondaryBrush}" />
+                                <TextBlock Text="{Binding CurrentSession.OpeningFloat, StringFormat='৳{0:F2}'}" FontWeight="SemiBold" Margin="0,0,16,0" />
+                                <TextBlock Text="Current Expected Cash: " Foreground="{StaticResource TextSecondaryBrush}" />
+                                <TextBlock Text="{Binding CurrentSession.ExpectedCash, StringFormat='৳{0:F2}'}" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}" />
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                            <Button Content="Open Session" Command="{Binding OpenSessionCommand}" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" />
+                            <Button Content="Close Session &amp; Reconcile" Command="{Binding CloseSessionCommand}" Style="{StaticResource DangerButtonStyle}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

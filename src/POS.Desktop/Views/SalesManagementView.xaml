@@ -1,0 +1,75 @@
+<UserControl x:Class="POS.Desktop.Views.SalesManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Border Style="{StaticResource CardStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Search & Filters -->
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" Width="350" HorizontalAlignment="Left" Tag="Search by invoice #, customer, or cashier..." />
+                    <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" />
+                </Grid>
+
+                <!-- Sales Grid -->
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Sales}" SelectedItem="{Binding SelectedSale, Mode=TwoWay}" Style="{StaticResource ModernDataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNumber}" Width="140" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="*" />
+                        <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName}" Width="140" />
+                        <DataGridTextColumn Header="Total" Binding="{Binding GrandTotal, StringFormat='৳{0:F2}'}" Width="110" FontWeight="Bold" />
+                        <DataGridTextColumn Header="Paid" Binding="{Binding PaidAmount, StringFormat='৳{0:F2}'}" Width="100" />
+                        <DataGridTextColumn Header="Due" Binding="{Binding DueAmount, StringFormat='৳{0:F2}'}" Width="90" />
+                        <DataGridTextColumn Header="Payment" Binding="{Binding PaymentMethod}" Width="120" />
+                        <DataGridTextColumn Header="Status" Binding="{Binding SaleStatus}" Width="110" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding SaleDate, StringFormat='yyyy-MM-dd HH:mm'}" Width="140" />
+                        <DataGridTemplateColumn Width="90">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="View" Command="{Binding DataContext.ViewDetailsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource OutlinedButtonStyle}" Padding="8,4" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- DETAILS MODAL -->
+        <Grid Background="#80000000" Visibility="{Binding IsDetailsModalOpen, Converter={StaticResource BoolToVis}}">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="440" MaxHeight="600" Style="{StaticResource CardStyle}" Padding="24">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Invoice Details" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,12"/>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,16">
+                        <Border Background="#FDF8E2" BorderBrush="#E5D9AC" BorderThickness="1" CornerRadius="4" Padding="16">
+                            <TextBlock Text="{Binding ReceiptText}" FontFamily="{StaticResource MonoFontFamily}" FontSize="12" Foreground="#333333" TextWrapping="Wrap" />
+                        </Border>
+                    </ScrollViewer>
+
+                    <Grid Grid.Row="2">
+                        <Button Content="Close" Command="{Binding CloseDetailsCommand}" Style="{StaticResource OutlinedButtonStyle}" Height="40" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,33 @@
+<UserControl x:Class="POS.Desktop.Views.InvoiceManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Border Style="{StaticResource CardStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <TextBlock Text="Invoices &amp; Print Logs" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
+                    <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
+                </Grid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Invoices}" Style="{StaticResource ModernDataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNumber}" Width="150" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="*" />
+                        <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName}" Width="150" />
+                        <DataGridTextColumn Header="Amount" Binding="{Binding GrandTotal, StringFormat='৳{0:F2}'}" Width="120" FontWeight="Bold" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding SaleDate, StringFormat='yyyy-MM-dd HH:mm'}" Width="160" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

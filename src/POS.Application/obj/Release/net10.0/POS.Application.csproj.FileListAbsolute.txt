@@ -1,0 +1,12 @@
+d:\Learning\Pos_SD5\src\POS.Application\bin\Release\net10.0\POS.Application.deps.json
+d:\Learning\Pos_SD5\src\POS.Application\bin\Release\net10.0\POS.Application.dll
+d:\Learning\Pos_SD5\src\POS.Application\bin\Release\net10.0\POS.Domain.dll
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.csproj.AssemblyReference.cache
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.GeneratedMSBuildEditorConfig.editorconfig
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.AssemblyInfoInputs.cache
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.AssemblyInfo.cs
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.csproj.CoreCompileInputs.cache
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Appl.B41D5806.Up2Date
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.dll
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\refint\POS.Application.dll
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\ref\POS.Application.dll

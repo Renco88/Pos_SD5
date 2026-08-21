@@ -1,0 +1,124 @@
+<UserControl x:Class="POS.Desktop.Views.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1100">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <StackPanel Margin="0,0,10,20">
+
+            <!-- 1. STAT CARDS ROW (Employer View) -->
+            <Grid Margin="0,0,0,20" Visibility="{Binding IsEmployer, Converter={StaticResource BoolToVis}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Today Sales Card -->
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="TODAY'S SALES" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <TextBlock Text="{Binding EmployerData.TodaySales, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource PrimaryBrush}" />
+                        <TextBlock Text="Gross revenue today" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Today Net Profit Card -->
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="TODAY'S NET PROFIT" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <TextBlock Text="{Binding EmployerData.TodayProfit, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource SuccessBrush}" />
+                        <TextBlock Text="Sales - COGS - Expenses" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Total Due Receivables Card -->
+                <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="TOTAL CUSTOMER DUE" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <TextBlock Text="{Binding EmployerData.TotalDue, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource DangerBrush}" />
+                        <TextBlock Text="Outstanding receivables" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Low Stock Products Alert -->
+                <Border Grid.Column="6" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="INVENTORY ALERTS" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding EmployerData.LowStockProductsCount}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource WarningBrush}" Margin="0,0,6,0"/>
+                            <TextBlock Text="Low / " Foreground="{StaticResource WarningBrush}" VerticalAlignment="Bottom" Margin="0,0,4,6"/>
+                            <TextBlock Text="{Binding EmployerData.OutOfStockProductsCount}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource DangerBrush}" Margin="0,0,4,0"/>
+                            <TextBlock Text="Out" Foreground="{StaticResource DangerBrush}" VerticalAlignment="Bottom" Margin="0,0,0,6"/>
+                        </StackPanel>
+                        <TextBlock Text="Requires restocking" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- 2. WORKER STAT CARDS ROW (Worker View) -->
+            <Grid Margin="0,0,0,20" Visibility="{Binding IsWorker, Converter={StaticResource BoolToVis}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="TODAY'S SHIFT SALES" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <TextBlock Text="{Binding WorkerData.TodaySales, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource PrimaryBrush}" />
+                        <TextBlock Text="{Binding WorkerData.TodayTransactionCount, StringFormat='{}{0} total transactions completed'}" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="DUE COLLECTED" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <TextBlock Text="{Binding WorkerData.TodayCollectedDue, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource SuccessBrush}" />
+                        <TextBlock Text="Customer payments received" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Column="4" Style="{StaticResource CardStyle}">
+                    <StackPanel>
+                        <TextBlock Text="REGISTER CASH" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                        <TextBlock Text="{Binding WorkerData.CurrentCash, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource InfoBrush}" />
+                        <TextBlock Text="Expected cash in drawer" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- 3. RECENT TRANSACTIONS TABLE -->
+            <Border Style="{StaticResource CardStyle}">
+                <StackPanel>
+                    <Grid Margin="0,0,0,16">
+                        <TextBlock Text="Recent Sales Transactions" Style="{StaticResource SectionTitleStyle}" />
+                        <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
+                    </Grid>
+
+                    <DataGrid ItemsSource="{Binding EmployerData.RecentSales}" Style="{StaticResource ModernDataGridStyle}" MaxHeight="380">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNumber}" Width="140" FontWeight="SemiBold" />
+                            <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="*" />
+                            <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName}" Width="140" />
+                            <DataGridTextColumn Header="Total" Binding="{Binding GrandTotal, StringFormat='৳{0:F2}'}" Width="110" FontWeight="Bold" />
+                            <DataGridTextColumn Header="Paid" Binding="{Binding PaidAmount, StringFormat='৳{0:F2}'}" Width="100" />
+                            <DataGridTextColumn Header="Payment Method" Binding="{Binding PaymentMethod}" Width="130" />
+                            <DataGridTextColumn Header="Date" Binding="{Binding SaleDate, StringFormat='yyyy-MM-dd HH:mm'}" Width="150" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

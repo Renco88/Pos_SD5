@@ -1,0 +1,127 @@
+<UserControl x:Class="POS.Desktop.Views.ProductManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="1000">
+    <Grid>
+        <Border Style="{StaticResource CardStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Search & Action Buttons -->
+                <Grid Grid.Row="0" Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" Width="350" HorizontalAlignment="Left" Tag="Search products by SKU, barcode, name..." />
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button Content="Add Product" Command="{Binding OpenCreateModalCommand}" Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,0" />
+                        <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Products Grid -->
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Products}" Style="{StaticResource ModernDataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="*" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="SKU" Binding="{Binding SKU}" Width="120" />
+                        <DataGridTextColumn Header="Barcode" Binding="{Binding Barcode}" Width="120" />
+                        <DataGridTextColumn Header="Category" Binding="{Binding CategoryName}" Width="140" />
+                        <DataGridTextColumn Header="Sell Price" Binding="{Binding SellingPrice, StringFormat='৳{0:F2}'}" Width="100" FontWeight="Bold" />
+                        <DataGridTextColumn Header="Cost Price" Binding="{Binding PurchasePrice, StringFormat='৳{0:F2}'}" Width="100" />
+                        <DataGridTextColumn Header="Stock" Binding="{Binding StockQuantity}" Width="80" />
+                        <DataGridTemplateColumn Width="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Edit" Command="{Binding DataContext.OpenEditModalCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource OutlinedButtonStyle}" Padding="8,4" Margin="0,0,6,0" />
+                                        <Button Content="Delete" Command="{Binding DataContext.DeleteProductCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource DangerButtonStyle}" Padding="8,4" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+
+        <!-- EDIT / CREATE MODAL -->
+        <Grid Background="#80000000" Visibility="{Binding IsEditModalOpen, Converter={StaticResource BoolToVis}}">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="480" Style="{StaticResource CardStyle}" Padding="28">
+                <StackPanel>
+                    <TextBlock Text="Product Details" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,16"/>
+
+                    <TextBlock Text="Product Name *" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                    <TextBox Text="{Binding FormName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" Margin="0,0,0,12"/>
+
+                    <TextBlock Text="Category *" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                    <ComboBox ItemsSource="{Binding Categories}" SelectedValue="{Binding FormCategoryId, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id" Height="36" Margin="0,0,0,12" Background="#FFFFFF" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="10,6"/>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="SKU" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding FormSku, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Barcode" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding FormBarcode, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Selling Price (৳) *" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding FormSellingPrice, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Purchase Cost (৳) *" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding FormPurchasePrice, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Stock Quantity *" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding FormStockQuantity, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Min Stock Alert" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                            <TextBox Text="{Binding FormMinStockLevel, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource ModernTextBoxStyle}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="12" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Cancel" Command="{Binding CloseModalCommand}" Style="{StaticResource OutlinedButtonStyle}" Height="40" />
+                        <Button Grid.Column="2" Content="Save Product" Command="{Binding SaveProductCommand}" Style="{StaticResource PrimaryButtonStyle}" Height="40" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
