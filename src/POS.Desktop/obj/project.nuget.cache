@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/nf12yye8LU=",
+  "dgSpecHash": "HoUzcEaNpqg=",
   "success": true,
-  "projectFilePath": "D:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj",
+  "projectFilePath": "d:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mr  Alien\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.0\\microsoft.extensions.configuration.10.0.0.nupkg.sha512",
     "C:\\Users\\Mr  Alien\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.0\\microsoft.extensions.configuration.abstractions.10.0.0.nupkg.sha512",

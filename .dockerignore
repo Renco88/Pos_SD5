@@ -1,0 +1,51 @@
+# .dockerignore - Optimize Docker build for NexPOS API
+
+# ========= Build artifacts =========
+**/bin/
+**/obj/
+**/publish/
+publish/
+artifacts/
+
+# ========= Solution / User files =========
+*.slnx
+*.suo
+*.cache
+*.user
+*.userosscache
+*.sln.docstates
+
+# ========= Git files =========
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# ========= IDEs & Editor configs =========
+.vscode/
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+
+# ========= OS files =========
+Thumbs.db
+.DS_Store
+ehthumbs.db
+desktop.ini
+
+# ========= Deployment & Docs (Not needed in Container) =========
+*.md
+USER_WORKER_DELETE_FEATURE_REPORT.md
+NEXPOS_COMPLETE_SYSTEM_REPORT.md
+RENDER_DEPLOYMENT_GUIDE.md
+
+# ========= Desktop Project (WPF - Windows ONLY - No need in Linux Docker) =========
+src/POS.Desktop/
+**/POS.Desktop/
+
+# ========= Logs & Temp =========
+logs/
+*.log
+temp/

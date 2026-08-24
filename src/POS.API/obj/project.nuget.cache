@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MQVgVtR2/YY=",
+  "dgSpecHash": "EewM5uYui0k=",
   "success": true,
-  "projectFilePath": "D:\\Learning\\Pos_SD5\\src\\POS.API\\POS.API.csproj",
+  "projectFilePath": "d:\\Learning\\Pos_SD5\\src\\POS.API\\POS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mr  Alien\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
     "C:\\Users\\Mr  Alien\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",

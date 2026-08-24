@@ -107,3 +107,4 @@ D:\Learning\Pos_SD5\src\POS.Desktop\obj\Debug\net10.0-windows\refint\POS.Desktop
 D:\Learning\Pos_SD5\src\POS.Desktop\obj\Debug\net10.0-windows\POS.Desktop.pdb
 D:\Learning\Pos_SD5\src\POS.Desktop\obj\Debug\net10.0-windows\POS.Desktop.genruntimeconfig.cache
 D:\Learning\Pos_SD5\src\POS.Desktop\obj\Debug\net10.0-windows\ref\POS.Desktop.dll
+d:\Learning\Pos_SD5\src\POS.Desktop\obj\Debug\net10.0-windows\POS.Desktop.sourcelink.json

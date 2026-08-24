@@ -55,3 +55,5 @@ D:\Learning\Pos_SD5\src\POS.API\obj\Debug\net10.0\refint\POS.API.dll
 D:\Learning\Pos_SD5\src\POS.API\obj\Debug\net10.0\POS.API.pdb
 D:\Learning\Pos_SD5\src\POS.API\obj\Debug\net10.0\POS.API.genruntimeconfig.cache
 D:\Learning\Pos_SD5\src\POS.API\obj\Debug\net10.0\ref\POS.API.dll
+d:\Learning\Pos_SD5\src\POS.API\bin\Debug\net10.0\appsettings.Production.json
+d:\Learning\Pos_SD5\src\POS.API\obj\Debug\net10.0\POS.API.sourcelink.json

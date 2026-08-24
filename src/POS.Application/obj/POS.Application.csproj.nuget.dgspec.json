@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {}
+    "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {}
   },
   "projects": {
-    "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {
+    "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
+        "projectUniqueName": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
         "projectName": "POS.Application",
-        "projectPath": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
+        "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
         "packagesPath": "C:\\Users\\Mr  Alien\\.nuget\\packages\\",
-        "outputPath": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\obj\\",
+        "outputPath": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mr  Alien\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -27,8 +27,8 @@
             "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj": {
-                "projectPath": "D:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj"
+              "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj": {
+                "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj"
               }
             }
           }
@@ -343,14 +343,14 @@
         }
       }
     },
-    "D:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj": {
+    "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj",
+        "projectUniqueName": "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj",
         "projectName": "POS.Domain",
-        "projectPath": "D:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj",
+        "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj",
         "packagesPath": "C:\\Users\\Mr  Alien\\.nuget\\packages\\",
-        "outputPath": "D:\\Learning\\Pos_SD5\\src\\POS.Domain\\obj\\",
+        "outputPath": "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mr  Alien\\AppData\\Roaming\\NuGet\\NuGet.Config"

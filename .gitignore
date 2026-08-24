@@ -1,0 +1,86 @@
+# ============================================================
+# NexPOS Enterprise - .gitignore
+# ============================================================
+
+# -------- Build & Publish Output --------
+**/bin/
+**/obj/
+publish/
+out/
+artifacts/
+*.Publish.xml
+*.pubxml
+
+# -------- NuGet --------
+packages/
+*.nupkg
+*.snupkg
+
+# -------- Visual Studio / IDEs --------
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+*.opendb
+
+# -------- Resharper / Rider --------
+_ReSharper*/
+*.ReSharper
+*.DotSettings
+*.DotSettings.user
+
+# -------- Windows OS files --------
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# -------- macOS Files --------
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# -------- Test Files --------
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# -------- User Secrets / Credentials --------
+secrets.json
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+!appsettings.Production.json  # Keep the template (no real secrets in template)
+*.pfx
+*.key
+*.pem
+
+# -------- Logs --------
+logs/
+logs.txt
+*.log
+
+# -------- Database files (Local MongoDB etc.) --------
+data/
+mongodb/
+*.db
+*.sqlite
+*.sqlite3
+
+# -------- Backup Files --------
+*.bak
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# -------- Docker --------
+.docker/
+*.dockerfile.bak

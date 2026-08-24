@@ -13,3 +13,4 @@ D:\Learning\Pos_SD5\src\POS.Application\obj\Debug\net10.0\POS.Application.dll
 D:\Learning\Pos_SD5\src\POS.Application\obj\Debug\net10.0\refint\POS.Application.dll
 D:\Learning\Pos_SD5\src\POS.Application\obj\Debug\net10.0\POS.Application.pdb
 D:\Learning\Pos_SD5\src\POS.Application\obj\Debug\net10.0\ref\POS.Application.dll
+d:\Learning\Pos_SD5\src\POS.Application\obj\Debug\net10.0\POS.Application.sourcelink.json

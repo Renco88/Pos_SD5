@@ -1,0 +1,67 @@
+# ============================================================
+# NexPOS Enterprise API - Render.com Blueprint (render.yaml)
+# One-click deploy file - Drop this in GitHub root
+# ============================================================
+
+services:
+  # ---------------- NexPOS Backend API ----------------
+  - type: web
+    name: nexpos-api
+    runtime: docker
+    repo: https://github.com/your-github-username/Pos_SD5  # ⚠️ REPLACE WITH YOUR ACTUAL REPO URL
+    branch: main
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: standard
+    region: singapore  # ⚠️ Change: oregon / singapore / frankfurt (pick nearest to your users - Bangladesh = singapore)
+    numInstances: 1
+    healthCheckPath: /
+    autoDeploy: yes
+    pullRequestPreviewsEnabled: no
+
+    # ------------- Environment Variables -------------
+    # 🔒 Set these in Render Dashboard "Environment" tab (DO NOT commit real secrets!)
+    envVars:
+
+      # 1️⃣ MONGODB - Already set in your appsettings.json but override here for safety
+      # Get this from MongoDB Atlas: https://cloud.mongodb.com/
+      # Format: mongodb+srv://<username>:<password>@<cluster-url>/
+      - key: MongoDbSettings__ConnectionString
+        sync: false
+        value: mongodb+srv://gmrenco4_db_user:G02m6FsVR8njgNgY@cluster0.tz5au5t.mongodb.net/
+
+      - key: MongoDbSettings__DatabaseName
+        value: POS_SD5_Production   # Use different DB name for Production!
+
+      # 2️⃣ JWT SECURITY - 🔐 USE A VERY LONG RANDOM STRING (32+ chars!)
+      # Generate one: "openssl rand -hex 64" or use: https://www.allkeysgenerator.com/
+      - key: JwtSettings__SecretKey
+        generateValue: true   # Render will auto-generate a strong key
+        sync: false
+
+      - key: JwtSettings__Issuer
+        value: NexPosAPI
+
+      - key: JwtSettings__Audience
+        value: NexPosClient
+
+      - key: JwtSettings__ExpiryMinutes
+        value: 1440           # 24 hours (production = safer, change if you want)
+
+      # 3️⃣ ASP.NET CORE
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+      # 4️⃣ LOGGING
+      - key: Logging__LogLevel__Default
+        value: Information
+
+      - key: Logging__LogLevel__Microsoft
+        value: Warning
+
+    # ------------- Disk (Optional - for backup files if needed) -------------
+    # disks:
+    #   - name: nexpos-backups
+    #     mountPath: /var/lib/nexpos/backups
+    #     sizeGB: 5

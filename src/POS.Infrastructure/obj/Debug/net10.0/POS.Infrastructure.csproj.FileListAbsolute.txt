@@ -15,3 +15,4 @@ D:\Learning\Pos_SD5\src\POS.Infrastructure\obj\Debug\net10.0\POS.Infrastructure.
 D:\Learning\Pos_SD5\src\POS.Infrastructure\obj\Debug\net10.0\refint\POS.Infrastructure.dll
 D:\Learning\Pos_SD5\src\POS.Infrastructure\obj\Debug\net10.0\POS.Infrastructure.pdb
 D:\Learning\Pos_SD5\src\POS.Infrastructure\obj\Debug\net10.0\ref\POS.Infrastructure.dll
+d:\Learning\Pos_SD5\src\POS.Infrastructure\obj\Debug\net10.0\POS.Infrastructure.sourcelink.json

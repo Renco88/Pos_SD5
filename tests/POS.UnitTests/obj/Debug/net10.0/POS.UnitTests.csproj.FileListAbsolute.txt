@@ -129,3 +129,4 @@ d:\Learning\Pos_SD5\tests\POS.UnitTests\obj\Debug\net10.0\refint\POS.UnitTests.d
 d:\Learning\Pos_SD5\tests\POS.UnitTests\obj\Debug\net10.0\POS.UnitTests.pdb
 d:\Learning\Pos_SD5\tests\POS.UnitTests\obj\Debug\net10.0\POS.UnitTests.genruntimeconfig.cache
 d:\Learning\Pos_SD5\tests\POS.UnitTests\obj\Debug\net10.0\ref\POS.UnitTests.dll
+d:\Learning\Pos_SD5\tests\POS.UnitTests\obj\Debug\net10.0\POS.UnitTests.sourcelink.json
