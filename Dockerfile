@@ -1,11 +1,11 @@
 # ============================================================
 # NexPOS Enterprise API - Dockerfile for Render.com Hosting
-# .NET 10 SDK Preview + ASP.NET Core Runtime
+# .NET 10 Stable + ASP.NET Core Runtime
 # ============================================================
 
 # ---------------- STAGE 1: BUILD ----------------
-# Use Official Microsoft .NET 10 SDK Preview Image
-FROM mcr.microsoft.com/dotnet/sdk:10.0-preview AS build
+# Use Official Microsoft .NET 10 SDK Stable Image
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copy solution/project files FIRST (Better Docker layer caching)
@@ -20,7 +20,7 @@ RUN dotnet restore "src/POS.API/POS.API.csproj"
 # Now copy ALL source code
 COPY . .
 
-# Publish API as Release (self-contained NOT needed - runtime in final image)
+# Publish API as Release
 WORKDIR "/src/src/POS.API"
 RUN dotnet build "POS.API.csproj" -c Release -o /app/build
 RUN dotnet publish "POS.API.csproj" -c Release -o /app/publish \
@@ -28,21 +28,22 @@ RUN dotnet publish "POS.API.csproj" -c Release -o /app/publish \
     /p:UseAppHost=false
 
 # ---------------- STAGE 2: FINAL RUNTIME ----------------
-# Use Official Microsoft ASP.NET Core 10 Preview Runtime Image (Smaller)
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS final
+# Use Official Microsoft ASP.NET Core 10 Runtime Image (Smaller)
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
 # Render best practice: Listen on $PORT env var (Render injects this automatically)
-ENV ASPNETCORE_URLS=http://+:8080
-ENV ASPNETCORE_ENVIRONMENT=Production
+# Also support direct PORT variable and fallback
+ENV ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
 ENV DOTNET_gcServer=1
 ENV DOTNET_TieredCompilation=1
 
 # Copy published output from build stage
 COPY --from=build /app/publish .
 
-# Expose port that Render expects (Render automatically routes 80/443 to this)
+# Expose port that Render expects
 EXPOSE 8080
+EXPOSE 80
 
-# Entrypoint: Run the API
-ENTRYPOINT ["dotnet", "POS.API.dll"]
+# Entrypoint: Run the API - listen on Render PORT or default 8080
+ENTRYPOINT ["sh", "-c", "ASPNETCORE_URLS=http://+:${PORT:-8080} dotnet POS.API.dll"]

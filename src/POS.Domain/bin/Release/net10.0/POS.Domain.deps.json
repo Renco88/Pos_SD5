@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "POS.Domain/1.0.1": {
+      "POS.Domain/1.0.0": {
         "runtime": {
           "POS.Domain.dll": {}
         }
@@ -14,7 +14,7 @@
     }
   },
   "libraries": {
-    "POS.Domain/1.0.1": {
+    "POS.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

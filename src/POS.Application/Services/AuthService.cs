@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using POS.Application.DTOs;
-using POS.Application.Helpers;
 using POS.Application.Interfaces;
 using POS.Domain.Entities;
 using POS.Domain.Enums;
@@ -76,15 +75,14 @@ public class AuthService : IAuthService
             throw new DomainException("Current password is incorrect.");
         }
 
+        if (string.IsNullOrWhiteSpace(request.NewPassword) || request.NewPassword.Length < 6)
+        {
+            throw new DomainException("New password must be at least 6 characters long.");
+        }
+
         if (request.NewPassword != request.ConfirmNewPassword)
         {
             throw new DomainException("New password and confirmation do not match.");
-        }
-
-        var passwordValidation = ValidationHelpers.ValidatePasswordStrength(request.NewPassword);
-        if (!passwordValidation.IsValid)
-        {
-            throw new DomainException(string.Join(" ", passwordValidation.Errors));
         }
 
         user.PasswordHash = _passwordHasher.HashPassword(request.NewPassword);
@@ -97,7 +95,7 @@ public class AuthService : IAuthService
             user.FullName,
             "ChangePassword",
             ActivityModule.Auth,
-            $"User '{user.Username}' changed their password (Strength: {passwordValidation.Strength}).",
+            $"User '{user.Username}' changed their password.",
             ct: ct);
 
         return updated;
@@ -108,10 +106,9 @@ public class AuthService : IAuthService
         var user = await _userRepo.GetByIdAsync(userId, ct)
             ?? throw new NotFoundException(nameof(User), userId);
 
-        var passwordValidation = ValidationHelpers.ValidatePasswordStrength(request.NewPassword);
-        if (!passwordValidation.IsValid)
+        if (string.IsNullOrWhiteSpace(request.NewPassword) || request.NewPassword.Length < 6)
         {
-            throw new DomainException(string.Join(" ", passwordValidation.Errors));
+            throw new DomainException("Password must be at least 6 characters long.");
         }
 
         user.PasswordHash = _passwordHasher.HashPassword(request.NewPassword);

@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using POS.Application.DTOs;
-using POS.Application.Helpers;
 using POS.Application.Interfaces;
 using POS.Domain.Entities;
 using POS.Domain.Enums;
@@ -58,10 +57,8 @@ public class WorkerService : IWorkerService
     {
         if (string.IsNullOrWhiteSpace(request.Username))
             throw new DomainException("Username is required.");
-
-        var passwordValidation = ValidationHelpers.ValidatePasswordStrength(request.Password);
-        if (!passwordValidation.IsValid)
-            throw new DomainException(string.Join(" ", passwordValidation.Errors));
+        if (string.IsNullOrWhiteSpace(request.Password) || request.Password.Length < 6)
+            throw new DomainException("Password must be at least 6 characters long.");
 
         var existing = await _userRepo.FindOneAsync(u => u.Username.ToLower() == request.Username.Trim().ToLower(), ct);
         if (existing != null)
@@ -125,9 +122,8 @@ public class WorkerService : IWorkerService
         var u = await _userRepo.GetByIdAsync(id, ct)
             ?? throw new NotFoundException(nameof(User), id);
 
-        var passwordValidation = ValidationHelpers.ValidatePasswordStrength(newPassword);
-        if (!passwordValidation.IsValid)
-            throw new DomainException(string.Join(" ", passwordValidation.Errors));
+        if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < 6)
+            throw new DomainException("Password must be at least 6 characters long.");
 
         u.PasswordHash = _passwordHasher.HashPassword(newPassword);
         u.MustChangePassword = true;
@@ -824,10 +820,8 @@ public class UserService : IUserService
     {
         if (string.IsNullOrWhiteSpace(request.Username))
             throw new DomainException("Username is required.");
-
-        var passwordValidation = ValidationHelpers.ValidatePasswordStrength(request.Password);
-        if (!passwordValidation.IsValid)
-            throw new DomainException(string.Join(" ", passwordValidation.Errors));
+        if (string.IsNullOrWhiteSpace(request.Password) || request.Password.Length < 6)
+            throw new DomainException("Password must be at least 6 characters.");
 
         var existing = await _userRepo.FindOneAsync(u => u.Username.ToLower() == request.Username.Trim().ToLower(), ct);
         if (existing != null)
@@ -973,8 +967,6 @@ public class ActivityLogService : IActivityLogService
 
     public async Task<PagedResult<ActivityLogDto>> GetLogsAsync(int pageNumber, int pageSize, ActivityModule? module = null, string? searchTerm = null, CancellationToken ct = default)
     {
-        var (safePageNumber, safePageSize) = ValidationHelpers.SanitizePagination(pageNumber, pageSize);
-
         var all = await _logRepo.GetAllAsync(ct);
         var query = all.AsEnumerable();
 
@@ -982,7 +974,7 @@ public class ActivityLogService : IActivityLogService
 
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            var term = ValidationHelpers.SanitizeSearchTerm(searchTerm);
+            var term = searchTerm.Trim().ToLower();
             query = query.Where(l =>
                 l.UserName.ToLower().Contains(term) ||
                 l.Action.ToLower().Contains(term) ||
@@ -992,8 +984,8 @@ public class ActivityLogService : IActivityLogService
         var list = query.OrderByDescending(l => l.CreatedAt).ToList();
         var totalCount = list.Count;
         var paged = list
-            .Skip((safePageNumber - 1) * safePageSize)
-            .Take(safePageSize)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .Select(l => new ActivityLogDto
             {
                 Id = l.Id,
@@ -1010,8 +1002,8 @@ public class ActivityLogService : IActivityLogService
         {
             Items = paged,
             TotalCount = totalCount,
-            PageNumber = safePageNumber,
-            PageSize = safePageSize
+            PageNumber = pageNumber,
+            PageSize = pageSize
         };
     }
 }

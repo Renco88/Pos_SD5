@@ -17,14 +17,18 @@ public class MongoDbContext
 
     public MongoDbContext(IOptions<MongoDbSettings> settings)
     {
-        var conn = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING");
-        if (string.IsNullOrWhiteSpace(conn))
-        {
-            conn = settings.Value.ConnectionString;
-        }
+        var conn = Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING")
+            ?? Environment.GetEnvironmentVariable("MongoDbSettings__ConnectionString")
+            ?? Environment.GetEnvironmentVariable("MongoDbSettings:ConnectionString")
+            ?? settings.Value.ConnectionString;
+
+        var dbName = Environment.GetEnvironmentVariable("MONGODB_DATABASE_NAME")
+            ?? Environment.GetEnvironmentVariable("MongoDbSettings__DatabaseName")
+            ?? Environment.GetEnvironmentVariable("MongoDbSettings:DatabaseName")
+            ?? settings.Value.DatabaseName;
 
         var client = new MongoClient(conn);
-        _database = client.GetDatabase(settings.Value.DatabaseName);
+        _database = client.GetDatabase(dbName);
     }
 
     public IMongoCollection<User> Users => _database.GetCollection<User>("Users");

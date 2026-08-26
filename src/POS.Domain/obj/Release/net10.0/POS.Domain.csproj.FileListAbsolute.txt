@@ -7,3 +7,6 @@ d:\Learning\Pos_SD5\src\POS.Domain\obj\Release\net10.0\POS.Domain.csproj.CoreCom
 d:\Learning\Pos_SD5\src\POS.Domain\obj\Release\net10.0\POS.Domain.dll
 d:\Learning\Pos_SD5\src\POS.Domain\obj\Release\net10.0\refint\POS.Domain.dll
 d:\Learning\Pos_SD5\src\POS.Domain\obj\Release\net10.0\ref\POS.Domain.dll
+d:\Learning\Pos_SD5\src\POS.Domain\bin\Release\net10.0\POS.Domain.pdb
+d:\Learning\Pos_SD5\src\POS.Domain\obj\Release\net10.0\POS.Domain.sourcelink.json
+d:\Learning\Pos_SD5\src\POS.Domain\obj\Release\net10.0\POS.Domain.pdb

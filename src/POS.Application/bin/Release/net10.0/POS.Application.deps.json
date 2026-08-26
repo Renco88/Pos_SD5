@@ -6,31 +6,31 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v10.0": {
-      "POS.Application/1.0.1": {
+      "POS.Application/1.0.0": {
         "dependencies": {
-          "POS.Domain": "1.0.1"
+          "POS.Domain": "1.0.0"
         },
         "runtime": {
           "POS.Application.dll": {}
         }
       },
-      "POS.Domain/1.0.1": {
+      "POS.Domain/1.0.0": {
         "runtime": {
           "POS.Domain.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "POS.Application/1.0.1": {
+    "POS.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "POS.Domain/1.0.1": {
+    "POS.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

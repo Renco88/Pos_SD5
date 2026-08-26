@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using POS.Application.DTOs;
-using POS.Application.Helpers;
 using POS.Application.Interfaces;
 using POS.Domain.Entities;
 using POS.Domain.Enums;
@@ -36,7 +35,6 @@ public class ProductService : IProductService
 
     public async Task<PagedResult<ProductDto>> GetProductsAsync(ProductFilterRequest request, CancellationToken ct = default)
     {
-        var (safePageNumber, safePageSize) = ValidationHelpers.SanitizePagination(request.PageNumber, request.PageSize);
         var all = await _productRepo.GetAllAsync(ct);
 
         var query = all.AsEnumerable();
@@ -53,9 +51,9 @@ public class ProductService : IProductService
         if (request.OutOfStockOnly == true)
             query = query.Where(p => p.IsOutOfStock);
 
-        var term = ValidationHelpers.SanitizeSearchTerm(request.SearchTerm);
-        if (term.Length > 0)
+        if (!string.IsNullOrWhiteSpace(request.SearchTerm))
         {
+            var term = request.SearchTerm.Trim().ToLower();
             query = query.Where(p =>
                 p.Name.ToLower().Contains(term) ||
                 p.SKU.ToLower().Contains(term) ||
@@ -67,8 +65,8 @@ public class ProductService : IProductService
         var list = query.OrderBy(p => p.Name).ToList();
         var totalCount = list.Count;
         var paged = list
-            .Skip((safePageNumber - 1) * safePageSize)
-            .Take(safePageSize)
+            .Skip((request.PageNumber - 1) * request.PageSize)
+            .Take(request.PageSize)
             .Select(MapToDto)
             .ToList();
 
@@ -76,8 +74,8 @@ public class ProductService : IProductService
         {
             Items = paged,
             TotalCount = totalCount,
-            PageNumber = safePageNumber,
-            PageSize = safePageSize
+            PageNumber = request.PageNumber,
+            PageSize = request.PageSize
         };
     }
 
@@ -105,20 +103,6 @@ public class ProductService : IProductService
             throw new DomainException("Selling price cannot be negative.");
         if (request.PurchasePrice < 0)
             throw new DomainException("Purchase price cannot be negative.");
-        if (request.StockQuantity < 0)
-            throw new DomainException("Stock quantity cannot be negative.");
-        if (request.MinStockLevel < 0)
-            throw new DomainException("Minimum stock level cannot be negative.");
-        if (request.WholesalePrice < 0)
-            throw new DomainException("Wholesale price cannot be negative.");
-        if (request.TaxRate < 0 || request.TaxRate > 100)
-            throw new DomainException("Tax rate must be between 0 and 100.");
-        if (request.DiscountRate < 0 || request.DiscountRate > 100)
-            throw new DomainException("Discount rate must be between 0 and 100.");
-        if (request.WholesalePrice > 0 && request.WholesalePrice > request.SellingPrice)
-            throw new DomainException("Wholesale price cannot be higher than selling price.");
-        if (request.PurchasePrice > request.SellingPrice)
-            throw new DomainException("Purchase price cannot be higher than selling price (risk of loss).");
 
         // Check duplicate SKU if SKU is provided
         if (!string.IsNullOrWhiteSpace(request.SKU))
@@ -224,25 +208,6 @@ public class ProductService : IProductService
             throw new DomainException("Selling price cannot be negative.");
         if (request.PurchasePrice.HasValue && request.PurchasePrice.Value < 0)
             throw new DomainException("Purchase price cannot be negative.");
-        if (request.StockQuantity.HasValue && request.StockQuantity.Value < 0)
-            throw new DomainException("Stock quantity cannot be negative.");
-        if (request.MinStockLevel.HasValue && request.MinStockLevel.Value < 0)
-            throw new DomainException("Minimum stock level cannot be negative.");
-        if (request.WholesalePrice.HasValue && request.WholesalePrice.Value < 0)
-            throw new DomainException("Wholesale price cannot be negative.");
-        if (request.TaxRate.HasValue && (request.TaxRate.Value < 0 || request.TaxRate.Value > 100))
-            throw new DomainException("Tax rate must be between 0 and 100.");
-        if (request.DiscountRate.HasValue && (request.DiscountRate.Value < 0 || request.DiscountRate.Value > 100))
-            throw new DomainException("Discount rate must be between 0 and 100.");
-
-        var finalSellingPrice = request.SellingPrice ?? product.SellingPrice;
-        var finalPurchasePrice = request.PurchasePrice ?? product.PurchasePrice;
-        var finalWholesalePrice = request.WholesalePrice ?? product.WholesalePrice;
-
-        if (finalWholesalePrice > 0 && finalWholesalePrice > finalSellingPrice)
-            throw new DomainException("Wholesale price cannot be higher than selling price.");
-        if (finalPurchasePrice > finalSellingPrice)
-            throw new DomainException("Purchase price cannot be higher than selling price (risk of loss).");
 
         // Check duplicate SKU
         if (!string.IsNullOrWhiteSpace(request.SKU) && request.SKU.ToLower() != product.SKU.ToLower())

@@ -10,3 +10,7 @@ d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Appl.B41D5806.Up
 d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.dll
 d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\refint\POS.Application.dll
 d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\ref\POS.Application.dll
+d:\Learning\Pos_SD5\src\POS.Application\bin\Release\net10.0\POS.Application.pdb
+d:\Learning\Pos_SD5\src\POS.Application\bin\Release\net10.0\POS.Domain.pdb
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.sourcelink.json
+d:\Learning\Pos_SD5\src\POS.Application\obj\Release\net10.0\POS.Application.pdb
