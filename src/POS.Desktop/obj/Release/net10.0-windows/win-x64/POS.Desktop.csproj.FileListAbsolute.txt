@@ -1,6 +1,6 @@
 d:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\POS.Desktop.exe
-D:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\POS.Desktop.deps.json
-D:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\POS.Desktop.runtimeconfig.json
+d:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\POS.Desktop.deps.json
+d:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\POS.Desktop.runtimeconfig.json
 d:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\POS.Desktop.dll
 d:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\Microsoft.Extensions.Configuration.dll
 d:\Learning\Pos_SD5\src\POS.Desktop\bin\Release\net10.0-windows\win-x64\Microsoft.Extensions.Configuration.Abstractions.dll
@@ -493,8 +493,8 @@ d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desk
 d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desktop.AssemblyInfoInputs.cache
 d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desktop.AssemblyInfo.cs
 d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desktop.csproj.CoreCompileInputs.cache
-D:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desk.5A2F66C5.Up2Date
+d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desk.5A2F66C5.Up2Date
 d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desktop.dll
 d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\refint\POS.Desktop.dll
-D:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desktop.genruntimeconfig.cache
-D:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\ref\POS.Desktop.dll
+d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\POS.Desktop.genruntimeconfig.cache
+d:\Learning\Pos_SD5\src\POS.Desktop\obj\Release\net10.0-windows\win-x64\ref\POS.Desktop.dll

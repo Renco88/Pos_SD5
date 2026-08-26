@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1000">
+             d:DesignHeight="700" d:DesignWidth="1100">
     <Grid>
         <Border Style="{StaticResource CardStyle}">
             <Grid>
@@ -18,14 +18,16 @@
                     <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
                 </Grid>
 
-                <DataGrid Grid.Row="1" ItemsSource="{Binding Returns}" Style="{StaticResource ModernDataGridStyle}">
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Returns}" Style="{StaticResource ModernDataGridStyle}" AutoGenerateColumns="False" IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Return #" Binding="{Binding ReturnNumber}" Width="140" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="Return Invoice #" Binding="{Binding ReturnInvoiceNumber}" Width="160" FontWeight="SemiBold" />
                         <DataGridTextColumn Header="Original Invoice" Binding="{Binding OriginalInvoiceNumber}" Width="150" />
                         <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="*" />
-                        <DataGridTextColumn Header="Refund Amount" Binding="{Binding RefundAmount, StringFormat='৳{0:F2}'}" Width="120" FontWeight="Bold" />
-                        <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="180" />
-                        <DataGridTextColumn Header="Date" Binding="{Binding ReturnDate, StringFormat='yyyy-MM-dd HH:mm'}" Width="150" />
+                        <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName}" Width="140" />
+                        <DataGridTextColumn Header="Total Refund" Binding="{Binding TotalRefundAmount, StringFormat='৳{0:F2}'}" Width="120" FontWeight="Bold" Foreground="#DC2626" />
+                        <DataGridTextColumn Header="Adjusted Due" Binding="{Binding AdjustedFromCustomerDue, StringFormat='Yes;;No'}" Width="100" />
+                        <DataGridTextColumn Header="Reason" Binding="{Binding ReturnReason}" Width="200" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding CreatedAt, StringFormat='yyyy-MM-dd HH:mm'}" Width="150" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

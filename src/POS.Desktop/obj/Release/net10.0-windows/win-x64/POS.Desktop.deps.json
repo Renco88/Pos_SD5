@@ -7,12 +7,12 @@
   "targets": {
     ".NETCoreApp,Version=v10.0": {},
     ".NETCoreApp,Version=v10.0/win-x64": {
-      "POS.Desktop/1.0.1": {
+      "POS.Desktop/1.0.0": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "10.0.0",
           "Microsoft.Extensions.Hosting": "10.0.0",
-          "POS.Application": "1.0.1",
-          "POS.Domain": "1.0.1",
+          "POS.Application": "1.0.0",
+          "POS.Domain": "1.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "10.0.11",
           "runtimepack.Microsoft.WindowsDesktop.App.Runtime.win-x64": "10.0.11"
         },
@@ -1280,29 +1280,29 @@
           }
         }
       },
-      "POS.Application/1.0.1": {
+      "POS.Application/1.0.0": {
         "dependencies": {
-          "POS.Domain": "1.0.1"
+          "POS.Domain": "1.0.0"
         },
         "runtime": {
           "POS.Application.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
-      "POS.Domain/1.0.1": {
+      "POS.Domain/1.0.0": {
         "runtime": {
           "POS.Domain.dll": {
-            "assemblyVersion": "1.0.1.0",
-            "fileVersion": "1.0.1.0"
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "POS.Desktop/1.0.1": {
+    "POS.Desktop/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -1506,12 +1506,12 @@
       "path": "microsoft.extensions.primitives/10.0.0",
       "hashPath": "microsoft.extensions.primitives.10.0.0.nupkg.sha512"
     },
-    "POS.Application/1.0.1": {
+    "POS.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "POS.Domain/1.0.1": {
+    "POS.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

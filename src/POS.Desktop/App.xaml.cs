@@ -46,10 +46,10 @@ public partial class App : System.Windows.Application
 
     private static void ConfigureServices(IServiceCollection services)
     {
-        // HTTP Client
+        // HTTP Client - PRODUCTION (Render Live URL)
         services.AddSingleton(sp => new HttpClient
         {
-            BaseAddress = new Uri("http://localhost:5000/"),
+            BaseAddress = new Uri("https://nexpos-api.onrender.com/"),
             Timeout = TimeSpan.FromSeconds(30)
         });
 
