@@ -191,29 +191,233 @@ public class DueManagementViewModel : ViewModelBase
         set => SetProperty(ref _dueSummary, value);
     }
 
+    private bool _isPaymentModalOpen;
+    public bool IsPaymentModalOpen { get => _isPaymentModalOpen; set => SetProperty(ref _isPaymentModalOpen, value); }
+
+    private bool _isCustomerPayment;
+    public bool IsCustomerPayment { get => _isCustomerPayment; set => SetProperty(ref _isCustomerPayment, value); }
+
+    private string _modalTitle = "Receive Payment from Customer";
+    public string ModalTitle { get => _modalTitle; set => SetProperty(ref _modalTitle, value); }
+
+    private string _targetName = "—";
+    public string TargetName { get => _targetName; set => SetProperty(ref _targetName, value ?? "—"); }
+
+    private string _targetId = string.Empty;
+    private decimal _paymentAmount;
+    public decimal PaymentAmount { get => _paymentAmount; set => SetProperty(ref _paymentAmount, Math.Max(0, value)); }
+
+    private PaymentMethod _paymentMethod = PaymentMethod.Cash;
+    public PaymentMethod PaymentMethod { get => _paymentMethod; set => SetProperty(ref _paymentMethod, value); }
+
+    public ObservableCollection<PaymentMethod> PaymentMethods { get; } = new ObservableCollection<PaymentMethod>();
+
+    private string _paymentNote = string.Empty;
+    public string PaymentNote { get => _paymentNote; set => SetProperty(ref _paymentNote, value ?? string.Empty); }
+
+    private decimal _maxPayable;
+    public decimal MaxPayable { get => _maxPayable; set => SetProperty(ref _maxPayable, Math.Max(0, value)); }
+
     public ICommand RefreshCommand { get; }
+    public ICommand OpenCustomerPaymentCommand { get; }
+    public ICommand OpenSupplierPaymentCommand { get; }
+    public ICommand SetFullAmountCommand { get; }
+    public ICommand SubmitPaymentCommand { get; }
+    public ICommand ClosePaymentModalCommand { get; }
 
     public DueManagementViewModel(IApiClient apiClient)
     {
         _apiClient = apiClient;
-        RefreshCommand = new AsyncRelayCommand(LoadDueSummaryAsync);
-        _ = LoadDueSummaryAsync();
+
+        PaymentMethods.Add(PaymentMethod.Cash);
+        PaymentMethods.Add(PaymentMethod.Card);
+        PaymentMethods.Add(PaymentMethod.MobileBanking);
+        PaymentMethods.Add(PaymentMethod.BankTransfer);
+        PaymentMethods.Add(PaymentMethod.CreditDue);
+        PaymentMethods.Add(PaymentMethod.SplitPartial);
+
+        try
+        {
+            RefreshCommand = new AsyncRelayCommand(LoadDueSummaryAsync);
+            OpenCustomerPaymentCommand = new RelayCommand(p => SafeOpenCustomer(p));
+            OpenSupplierPaymentCommand = new RelayCommand(p => SafeOpenSupplier(p));
+            SetFullAmountCommand = new RelayCommand(() => PaymentAmount = MaxPayable);
+            SubmitPaymentCommand = new AsyncRelayCommand(SafeSubmitPayment, SafeCanSubmit);
+            ClosePaymentModalCommand = new RelayCommand(() => { try { IsPaymentModalOpen = false; } catch { /* ignore */ } });
+
+            _ = LoadDueSummaryAsync().ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                {
+                    try
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[DueManagement] Init faulted: {t.Exception?.Flatten().Message}");
+                    }
+                    catch { /* ignore */ }
+                }
+            }, TaskScheduler.Default);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] Constructor exception: {ex}");
+        }
+    }
+
+    private void SafeOpenCustomer(object? p)
+    {
+        try
+        {
+            if (p is CustomerDto c) OpenCustomerPayment(c);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] SafeOpenCustomer: {ex.Message}");
+        }
+    }
+
+    private void SafeOpenSupplier(object? p)
+    {
+        try
+        {
+            if (p is SupplierDto s) OpenSupplierPayment(s);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] SafeOpenSupplier: {ex.Message}");
+        }
+    }
+
+    private bool SafeCanSubmit()
+    {
+        try
+        {
+            return PaymentAmount > 0 && PaymentAmount <= MaxPayable && !string.IsNullOrWhiteSpace(_targetId);
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private async Task SafeSubmitPayment()
+    {
+        try
+        {
+            await SubmitPaymentAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] SafeSubmitPayment: {ex.Message}");
+        }
     }
 
     public async Task LoadDueSummaryAsync()
     {
-        IsBusy = true;
         try
         {
+            IsBusy = true;
             var res = await _apiClient.GetDueSummaryAsync();
-            if (res.Success && res.Data != null)
+            if (res != null && res.Success && res.Data != null)
             {
                 DueSummary = res.Data;
             }
         }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] LoadDueSummaryAsync: {ex.Message}");
+        }
         finally
         {
-            IsBusy = false;
+            try { IsBusy = false; } catch { /* ignore */ }
+        }
+    }
+
+    private void OpenCustomerPayment(CustomerDto? c)
+    {
+        if (c == null) return;
+        try
+        {
+            _targetId = c.Id ?? string.Empty;
+            _isCustomerPayment = true;
+            ModalTitle = "💰 Receive Payment from Customer";
+            TargetName = string.IsNullOrWhiteSpace(c.Name) ? "Customer" : c.Name;
+            MaxPayable = c.CurrentDue;
+            PaymentAmount = c.CurrentDue;
+            PaymentMethod = PaymentMethod.Cash;
+            PaymentNote = string.Empty;
+            IsPaymentModalOpen = true;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] OpenCustomerPayment: {ex.Message}");
+        }
+    }
+
+    private void OpenSupplierPayment(SupplierDto? s)
+    {
+        if (s == null) return;
+        try
+        {
+            _targetId = s.Id ?? string.Empty;
+            _isCustomerPayment = false;
+            ModalTitle = "💳 Pay Due to Supplier";
+            TargetName = string.IsNullOrWhiteSpace(s.Name) ? "Supplier" : s.Name;
+            MaxPayable = s.CurrentDue;
+            PaymentAmount = s.CurrentDue;
+            PaymentMethod = PaymentMethod.Cash;
+            PaymentNote = string.Empty;
+            IsPaymentModalOpen = true;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] OpenSupplierPayment: {ex.Message}");
+        }
+    }
+
+    private async Task SubmitPaymentAsync()
+    {
+        if (!SafeCanSubmit()) return;
+        IsBusy = true;
+        try
+        {
+            bool ok;
+            if (_isCustomerPayment)
+            {
+                var req = new CustomerPaymentRequest
+                {
+                    CustomerId = _targetId,
+                    Amount = PaymentAmount,
+                    PaymentMethod = PaymentMethod,
+                    Note = PaymentNote ?? string.Empty
+                };
+                var res = await _apiClient.RecordCustomerPaymentAsync(req);
+                ok = res != null && res.Success;
+            }
+            else
+            {
+                var req = new SupplierPaymentRequest
+                {
+                    SupplierId = _targetId,
+                    Amount = PaymentAmount,
+                    PaymentMethod = PaymentMethod,
+                    Note = PaymentNote ?? string.Empty
+                };
+                var res = await _apiClient.RecordSupplierPaymentAsync(req);
+                ok = res != null && res.Success;
+            }
+            if (ok)
+            {
+                IsPaymentModalOpen = false;
+                await LoadDueSummaryAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[DueManagement] SubmitPaymentAsync: {ex.Message}");
+        }
+        finally
+        {
+            try { IsBusy = false; } catch { /* ignore */ }
         }
     }
 }

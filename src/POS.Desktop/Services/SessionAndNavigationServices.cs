@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using POS.Application.DTOs;
 using POS.Domain.Enums;
 
@@ -122,11 +124,34 @@ public class NavigationService : INavigationService
 
     public void NavigateTo(Type viewModelType)
     {
-        var vm = _serviceProvider.GetService(viewModelType);
-        if (vm != null)
+        try
         {
-            CurrentViewModel = vm;
-            CurrentViewName = viewModelType.Name.Replace("ViewModel", "");
+            var vm = _serviceProvider.GetService(viewModelType);
+            if (vm != null)
+            {
+                CurrentViewModel = vm;
+                CurrentViewName = viewModelType.Name.Replace("ViewModel", "");
+            }
+            else
+            {
+                MessageBox.Show(
+                    $"Could not load page '{viewModelType.Name}'. The required component was not registered.",
+                    "Navigation Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[NavigationService] NavigateTo {viewModelType.Name} failed: {ex}");
+            MessageBox.Show(
+                $"Could not open this page due to an error.\n\n" +
+                $"Page: {viewModelType.Name.Replace("ViewModel", "")}\n" +
+                $"Error: {ex.Message}\n\n" +
+                $"Type: {ex.GetType().Name}",
+                "⚠️ Navigation Failed",
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
         }
     }
 

@@ -3,62 +3,219 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:POS.Desktop.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1000">
+             d:DesignHeight="820" d:DesignWidth="1180">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <!-- Summary Cards Row -->
-        <Grid Grid.Row="0" Margin="0,0,0,16">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="16" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!-- Customer Due Card -->
-            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
-                <StackPanel>
-                    <TextBlock Text="TOTAL CUSTOMER DUE (RECEIVABLES)" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
-                    <TextBlock Text="{Binding DueSummary.TotalCustomerDue, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource DangerBrush}" />
-                    <TextBlock Text="Outstanding balance owed by customers" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Supplier Due Card -->
-            <Border Grid.Column="2" Style="{StaticResource CardStyle}">
-                <StackPanel>
-                    <TextBlock Text="TOTAL SUPPLIER DUE (PAYABLES)" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
-                    <TextBlock Text="{Binding DueSummary.TotalSupplierDue, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource WarningBrush}" />
-                    <TextBlock Text="Outstanding payments owed to suppliers" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
-                </StackPanel>
-            </Border>
-        </Grid>
-
-        <!-- Top Due Accounts Table -->
-        <Border Grid.Row="1" Style="{StaticResource CardStyle}">
-            <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <Grid Margin="0,0,0,16">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="16" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
+                <!-- Summary Cards Row -->
                 <Grid Grid.Row="0" Margin="0,0,0,16">
-                    <TextBlock Text="Outstanding Customer Accounts" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
-                    <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="16" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Customer Due Card -->
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="TOTAL CUSTOMER DUE (RECEIVABLES)" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <TextBlock Text="{Binding DueSummary.TotalCustomerDue, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource DangerBrush}" />
+                            <TextBlock Text="Outstanding balance owed by customers" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <TextBlock Text="Customers with due: " Style="{StaticResource MutedCaptionStyle}"/>
+                                <TextBlock Text="{Binding DueSummary.DueCustomerCount}" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Supplier Due Card -->
+                    <Border Grid.Column="2" Style="{StaticResource CardStyle}">
+                        <StackPanel>
+                            <TextBlock Text="TOTAL SUPPLIER DUE (PAYABLES)" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <TextBlock Text="{Binding DueSummary.TotalSupplierDue, StringFormat='৳{0:F2}'}" Style="{StaticResource HeroTitleStyle}" Foreground="{StaticResource WarningBrush}" />
+                            <TextBlock Text="Outstanding payments owed to suppliers" Style="{StaticResource MutedCaptionStyle}" Margin="0,4,0,0"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                <TextBlock Text="Suppliers with due: " Style="{StaticResource MutedCaptionStyle}"/>
+                                <TextBlock Text="{Binding DueSummary.DueSupplierCount}" Style="{StaticResource MutedCaptionStyle}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
                 </Grid>
 
-                <DataGrid Grid.Row="1" ItemsSource="{Binding DueSummary.TopCustomerDues}" Style="{StaticResource ModernDataGridStyle}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Customer Name" Binding="{Binding Name}" Width="250" FontWeight="SemiBold" />
-                        <DataGridTextColumn Header="Phone" Binding="{Binding Phone}" Width="180" />
-                        <DataGridTextColumn Header="Total Due" Binding="{Binding TotalDue, StringFormat='৳{0:F2}'}" Width="*" FontWeight="Bold" />
-                    </DataGrid.Columns>
-                </DataGrid>
+                <!-- Top Due CUSTOMERS Table -->
+                <Border Grid.Row="1" Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <TextBlock Text="🧾 Outstanding Customer Accounts" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
+                            <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
+                        </Grid>
+
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding DueSummary.TopDueCustomers}" Style="{StaticResource ModernDataGridStyle}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Customer Name" Binding="{Binding Name}" Width="200" FontWeight="SemiBold" />
+                                <DataGridTextColumn Header="Phone" Binding="{Binding Phone, FallbackValue='N/A', TargetNullValue='N/A'}" Width="130" />
+                                <DataGridTextColumn Header="Email" Binding="{Binding Email, FallbackValue='N/A', TargetNullValue='N/A'}" Width="170" />
+                                <DataGridTextColumn Header="Prev Due" Binding="{Binding PreviousDue, StringFormat='৳{0:F2}', FallbackValue='৳0.00'}" Width="100" Foreground="#6B7280" />
+                                <DataGridTextColumn Header="Total Due (৳)" Binding="{Binding CurrentDue, StringFormat='৳{0:F2}', FallbackValue='৳0.00'}" Width="120" FontWeight="Bold" Foreground="#DC2626" />
+                                <DataGridTemplateColumn Header="Action" Width="110">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Receive 💰"
+                                                    Padding="10,4"
+                                                    Background="#16A34A"
+                                                    Foreground="White"
+                                                    FontWeight="SemiBold"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.OpenCustomerPaymentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
+
+                <!-- Top Due SUPPLIERS Table -->
+                <Border Grid.Row="3" Style="{StaticResource CardStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <TextBlock Text="📦 Outstanding Supplier Accounts" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
+                        </Grid>
+
+                        <DataGrid Grid.Row="1" ItemsSource="{Binding DueSummary.TopDueSuppliers}" Style="{StaticResource ModernDataGridStyle}" AutoGenerateColumns="False" IsReadOnly="True">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Supplier Name" Binding="{Binding Name}" Width="200" FontWeight="SemiBold" />
+                                <DataGridTextColumn Header="Phone" Binding="{Binding Phone, FallbackValue='N/A', TargetNullValue='N/A'}" Width="130" />
+                                <DataGridTextColumn Header="Email" Binding="{Binding Email, FallbackValue='N/A', TargetNullValue='N/A'}" Width="170" />
+                                <DataGridTextColumn Header="Prev Due" Binding="{Binding PreviousDue, StringFormat='৳{0:F2}', FallbackValue='৳0.00'}" Width="100" Foreground="#6B7280" />
+                                <DataGridTextColumn Header="Total Payable (৳)" Binding="{Binding CurrentDue, StringFormat='৳{0:F2}', FallbackValue='৳0.00'}" Width="120" FontWeight="Bold" Foreground="#D97706" />
+                                <DataGridTemplateColumn Header="Action" Width="110">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="Pay 💳"
+                                                    Padding="10,4"
+                                                    Background="#2563EB"
+                                                    Foreground="White"
+                                                    FontWeight="SemiBold"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.OpenSupplierPaymentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </Border>
             </Grid>
+        </ScrollViewer>
+
+        <!-- ========== PAYMENT MODAL OVERLAY ========== -->
+        <Border Background="#80000000" Visibility="{Binding IsPaymentModalOpen, Converter={StaticResource BoolToVis}}">
+            <Border VerticalAlignment="Center" HorizontalAlignment="Center"
+                    Style="{StaticResource CardStyle}"
+                    Width="520"
+                    Padding="24"
+                    CornerRadius="12"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1">
+                <StackPanel>
+                    <Grid Margin="0,0,0,16">
+                        <TextBlock Text="{Binding ModalTitle}" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center" />
+                        <Button Content="✕"
+                                FontSize="14"
+                                Command="{Binding ClosePaymentModalCommand}"
+                                HorizontalAlignment="Right"
+                                Padding="8,2"
+                                Background="Transparent"
+                                Foreground="#6B7280"
+                                BorderThickness="0" />
+                    </Grid>
+
+                    <Border Background="#F9FAFB" CornerRadius="8" Padding="14" Margin="0,0,0,16">
+                        <StackPanel>
+                            <TextBlock Text="From/To:" Style="{StaticResource MutedCaptionStyle}" />
+                            <TextBlock Text="{Binding TargetName, FallbackValue='—', TargetNullValue='—'}" FontWeight="Bold" FontSize="16" Foreground="#111827" Margin="0,2,0,6"/>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Current Outstanding: " Style="{StaticResource MutedCaptionStyle}" />
+                                <TextBlock Text="{Binding MaxPayable, StringFormat='৳{0:F2}', FallbackValue='৳0.00'}" FontWeight="Bold" Foreground="#DC2626" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <TextBlock Text="Amount (৳):" FontWeight="SemiBold" Foreground="#111827" Margin="0,0,0,4"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding PaymentAmount, UpdateSourceTrigger=PropertyChanged, FallbackValue=0, TargetNullValue=0}"
+                                 FontSize="16" FontWeight="Bold" Padding="10,8"
+                                 VerticalContentAlignment="Center"
+                                 Style="{StaticResource ModernTextBoxStyle}"/>
+                        <Button Grid.Column="1" Content="Full"
+                                Command="{Binding SetFullAmountCommand}"
+                                Margin="8,0,0,0"
+                                Style="{StaticResource OutlinedButtonStyle}"
+                                Padding="12,0"
+                                FontSize="12"
+                                FontWeight="SemiBold"/>
+                    </Grid>
+
+                    <TextBlock Text="Payment Method:" FontWeight="SemiBold" Foreground="#111827" Margin="0,14,0,4"/>
+                    <ComboBox ItemsSource="{Binding PaymentMethods}"
+                              SelectedItem="{Binding PaymentMethod}"
+                              Style="{StaticResource ModernComboBoxStyle}" />
+
+                    <TextBlock Text="Note (Optional):" FontWeight="SemiBold" Foreground="#111827" Margin="0,14,0,4"/>
+                    <TextBox Text="{Binding PaymentNote, UpdateSourceTrigger=PropertyChanged, FallbackValue='', TargetNullValue=''}"
+                             Style="{StaticResource ModernTextBoxStyle}"
+                             Padding="10,8"
+                             AcceptsReturn="True"
+                             Height="60"
+                             TextWrapping="Wrap"
+                             VerticalScrollBarVisibility="Auto"/>
+
+                    <Grid Margin="0,20,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Cancel"
+                                Command="{Binding ClosePaymentModalCommand}"
+                                Style="{StaticResource OutlinedButtonStyle}"/>
+                        <Button Grid.Column="2" Content="Confirm Payment ✓"
+                                Command="{Binding SubmitPaymentCommand}"
+                                Background="#2563EB"
+                                Foreground="White"
+                                FontWeight="Bold"
+                                BorderThickness="0"
+                                Padding="14,0"
+                                Cursor="Hand"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
         </Border>
     </Grid>
 </UserControl>

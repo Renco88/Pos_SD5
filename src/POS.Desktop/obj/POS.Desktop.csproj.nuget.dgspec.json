@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj": {}
+    "D:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj": {}
   },
   "projects": {
-    "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {
+    "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
+        "projectUniqueName": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
         "projectName": "POS.Application",
-        "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
+        "projectPath": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj",
         "packagesPath": "C:\\Users\\Mr  Alien\\.nuget\\packages\\",
-        "outputPath": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\obj\\",
+        "outputPath": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mr  Alien\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -49,14 +49,6 @@
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
-          "dependencies": {
-            "Microsoft.NET.ILLink.Tasks": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[10.0.11, )",
-              "autoReferenced": true
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -68,20 +60,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -363,21 +341,16 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
-        }
       }
     },
-    "d:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj": {
+    "D:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj",
+        "projectUniqueName": "D:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj",
         "projectName": "POS.Desktop",
-        "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj",
+        "projectPath": "D:\\Learning\\Pos_SD5\\src\\POS.Desktop\\POS.Desktop.csproj",
         "packagesPath": "C:\\Users\\Mr  Alien\\.nuget\\packages\\",
-        "outputPath": "d:\\Learning\\Pos_SD5\\src\\POS.Desktop\\obj\\",
+        "outputPath": "D:\\Learning\\Pos_SD5\\src\\POS.Desktop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mr  Alien\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -393,8 +366,8 @@
             "framework": "net10.0-windows7.0",
             "targetAlias": "net10.0-windows",
             "projectReferences": {
-              "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {
-                "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj"
+              "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj": {
+                "projectPath": "D:\\Learning\\Pos_SD5\\src\\POS.Application\\POS.Application.csproj"
               },
               "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj": {
                 "projectPath": "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj"
@@ -426,12 +399,6 @@
             "Microsoft.Extensions.Hosting": {
               "target": "Package",
               "version": "[10.0.0, )"
-            },
-            "Microsoft.NET.ILLink.Tasks": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[10.0.11, )",
-              "autoReferenced": true
             }
           },
           "imports": [
@@ -445,20 +412,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -759,11 +712,6 @@
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
         }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
-        }
       }
     },
     "d:\\Learning\\Pos_SD5\\src\\POS.Domain\\POS.Domain.csproj": {
@@ -807,14 +755,6 @@
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
-          "dependencies": {
-            "Microsoft.NET.ILLink.Tasks": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[10.0.11, )",
-              "autoReferenced": true
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -826,20 +766,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[10.0.11, 10.0.11]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -1120,11 +1046,6 @@
             "System.Xml.XPath": "(,4.3.32767]",
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
-        }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
         }
       }
     }
