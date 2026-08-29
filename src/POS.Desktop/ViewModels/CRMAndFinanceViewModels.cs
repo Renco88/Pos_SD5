@@ -489,18 +489,29 @@ public class ExpenseManagementViewModel : ViewModelBase
 public class SalesReturnViewModel : ViewModelBase
 {
     private readonly IApiClient _apiClient;
-    public ObservableCollection<ReturnDto> Returns { get; } = [];
+    public ObservableCollection<ReturnDto> Returns { get; } = new ObservableCollection<ReturnDto>();
 
     public ICommand RefreshCommand { get; }
 
     public SalesReturnViewModel(IApiClient apiClient)
     {
-        _apiClient = apiClient;
-        RefreshCommand = new AsyncRelayCommand(LoadReturnsAsync);
-        _ = LoadReturnsAsync();
+        try
+        {
+            _apiClient = apiClient;
+            RefreshCommand = new AsyncRelayCommand(SafeLoadReturnsAsync);
+            _ = SafeLoadReturnsAsync().ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                    System.Diagnostics.Debug.WriteLine($"[SalesReturnVM] Init faulted: {t.Exception?.Flatten().Message}");
+            }, TaskContinuationOptions.OnlyOnFaulted);
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SalesReturnVM] Constructor failed: {ex}");
+        }
     }
 
-    public async Task LoadReturnsAsync()
+    private async Task SafeLoadReturnsAsync()
     {
         IsBusy = true;
         try
@@ -511,6 +522,14 @@ public class SalesReturnViewModel : ViewModelBase
                 Returns.Clear();
                 foreach (var r in res.Data.Items) Returns.Add(r);
             }
+            else if (!res.Success)
+            {
+                System.Diagnostics.Debug.WriteLine($"[SalesReturnVM] API error: {res.Message}");
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[SalesReturnVM] Load failed: {ex}");
         }
         finally
         {

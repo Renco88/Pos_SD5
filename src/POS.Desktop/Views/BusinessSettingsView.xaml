@@ -6,7 +6,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="1000">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Border Style="{StaticResource CardStyle}" Width="560" HorizontalAlignment="Left">
+        <StackPanel HorizontalAlignment="Left">
+        <Border Style="{StaticResource CardStyle}" Width="560">
             <StackPanel>
                 <TextBlock Text="Store &amp; POS Business Settings" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,16"/>
 
@@ -54,5 +55,42 @@
                 <Button Content="Save Settings" Command="{Binding SaveCommand}" Style="{StaticResource PrimaryButtonStyle}" Height="42" />
             </StackPanel>
         </Border>
+
+        <!-- ===================== SHORTCUT MANAGEMENT CARD ===================== -->
+        <Border Style="{StaticResource CardStyle}" Width="560" Margin="0,20,0,0">
+            <StackPanel>
+                <TextBlock Text="Desktop &amp; Start Menu Shortcuts" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,4"/>
+                <TextBlock Text="Create one-click shortcuts for easy access." Style="{StaticResource MutedTextStyle}" Margin="0,0,0,16"/>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Status:" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
+                        <TextBlock Text="{Binding ShortcutStatus, FallbackValue='Checking...'}" Style="{StaticResource MutedTextStyle}" FontWeight="SemiBold" FontSize="{StaticResource FontSizeBody}" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Content="📌  Create Desktop Shortcut"
+                            Command="{Binding CreateDesktopShortcutCommand}"
+                            Style="{StaticResource OutlinedButtonStyle}"
+                            Height="40" />
+                    <Button Grid.Column="2" Content="🗂️  Create Start Menu Shortcut"
+                            Command="{Binding CreateStartMenuShortcutCommand}"
+                            Style="{StaticResource OutlinedButtonStyle}"
+                            Height="40" />
+                </Grid>
+            </StackPanel>
+        </Border>
+        </StackPanel>
     </ScrollViewer>
 </UserControl>

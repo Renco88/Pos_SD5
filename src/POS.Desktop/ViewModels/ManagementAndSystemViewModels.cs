@@ -331,18 +331,94 @@ public class BusinessSettingsViewModel : ViewModelBase
 {
     private readonly IApiClient _apiClient;
     private BusinessSettingsDto _settings = new();
+    private string _shortcutStatus = "Ready to create shortcuts.";
 
     public BusinessSettingsDto Settings { get => _settings; set => SetProperty(ref _settings, value); }
 
+    public string ShortcutStatus
+    {
+        get => _shortcutStatus;
+        set => SetProperty(ref _shortcutStatus, value ?? string.Empty);
+    }
+
     public ICommand SaveCommand { get; }
     public ICommand RefreshCommand { get; }
+    public ICommand CreateDesktopShortcutCommand { get; }
+    public ICommand CreateStartMenuShortcutCommand { get; }
 
     public BusinessSettingsViewModel(IApiClient apiClient)
     {
-        _apiClient = apiClient;
-        SaveCommand = new AsyncRelayCommand(SaveSettingsAsync);
-        RefreshCommand = new AsyncRelayCommand(LoadSettingsAsync);
-        _ = LoadSettingsAsync();
+        try
+        {
+            _apiClient = apiClient;
+            SaveCommand = new AsyncRelayCommand(SaveSettingsAsync);
+            RefreshCommand = new AsyncRelayCommand(LoadSettingsAsync);
+            CreateDesktopShortcutCommand = new AsyncRelayCommand(CreateDesktopShortcutAsync);
+            CreateStartMenuShortcutCommand = new AsyncRelayCommand(CreateStartMenuShortcutAsync);
+
+            _ = LoadSettingsAsync().ContinueWith(t =>
+            {
+                if (t.IsFaulted)
+                    System.Diagnostics.Debug.WriteLine($"[BusinessSettingsVM] InitLoad faulted: {t.Exception?.Flatten().Message}");
+            }, TaskContinuationOptions.OnlyOnFaulted);
+
+            RefreshShortcutStatus();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[BusinessSettingsVM] Constructor: {ex}");
+        }
+    }
+
+    private void RefreshShortcutStatus()
+    {
+        try
+        {
+            var hasDesktop = ShortcutManager.DesktopShortcutExists();
+            var exe = ShortcutManager.GetExePath();
+            ShortcutStatus = hasDesktop
+                ? $"✅ Desktop shortcut already exists.\nApp location: {exe}"
+                : $"ℹ️ No desktop shortcut yet. Click the button below to create one.\nApp location: {exe}";
+        }
+        catch (Exception ex)
+        {
+            ShortcutStatus = $"⚠️ Could not check shortcut status: {ex.Message}";
+        }
+    }
+
+    private async Task CreateDesktopShortcutAsync()
+    {
+        try
+        {
+            IsBusy = true;
+            ShortcutStatus = "Creating desktop shortcut...";
+            var (ok, msg) = await ShortcutManager.CreateDesktopShortcutAsync();
+            ShortcutStatus = msg;
+            SuccessMessage = ok ? msg : null;
+            if (!ok) ErrorMessage = msg;
+            RefreshShortcutStatus();
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private async Task CreateStartMenuShortcutAsync()
+    {
+        try
+        {
+            IsBusy = true;
+            ShortcutStatus = "Creating Start Menu shortcut...";
+            var (ok, msg) = await ShortcutManager.CreateStartMenuShortcutAsync();
+            ShortcutStatus = msg;
+            SuccessMessage = ok ? msg : null;
+            if (!ok) ErrorMessage = msg;
+        }
+        finally
+        {
+            IsBusy = false;
+        }
     }
 
     public async Task LoadSettingsAsync()

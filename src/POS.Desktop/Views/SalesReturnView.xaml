@@ -18,16 +18,16 @@
                     <Button Content="Refresh" Command="{Binding RefreshCommand}" Style="{StaticResource OutlinedButtonStyle}" HorizontalAlignment="Right" />
                 </Grid>
 
-                <DataGrid Grid.Row="1" ItemsSource="{Binding Returns}" Style="{StaticResource ModernDataGridStyle}" AutoGenerateColumns="False" IsReadOnly="True">
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Returns, FallbackValue={x:Null}}" Style="{StaticResource ModernDataGridStyle}" AutoGenerateColumns="False" IsReadOnly="True" CanUserResizeColumns="True" RowBackground="Transparent" AlternatingRowBackground="#FAFAFA">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Return Invoice #" Binding="{Binding ReturnInvoiceNumber}" Width="160" FontWeight="SemiBold" />
-                        <DataGridTextColumn Header="Original Invoice" Binding="{Binding OriginalInvoiceNumber}" Width="150" />
-                        <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName}" Width="*" />
-                        <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName}" Width="140" />
-                        <DataGridTextColumn Header="Total Refund" Binding="{Binding TotalRefundAmount, StringFormat='৳{0:F2}'}" Width="120" FontWeight="Bold" Foreground="#DC2626" />
-                        <DataGridTextColumn Header="Adjusted Due" Binding="{Binding AdjustedFromCustomerDue, StringFormat='Yes;;No'}" Width="100" />
-                        <DataGridTextColumn Header="Reason" Binding="{Binding ReturnReason}" Width="200" />
-                        <DataGridTextColumn Header="Date" Binding="{Binding CreatedAt, StringFormat='yyyy-MM-dd HH:mm'}" Width="150" />
+                        <DataGridTextColumn Header="Return Invoice #" Binding="{Binding ReturnInvoiceNumber, TargetNullValue='N/A', FallbackValue='N/A'}" Width="160" FontWeight="SemiBold" />
+                        <DataGridTextColumn Header="Original Invoice" Binding="{Binding OriginalInvoiceNumber, TargetNullValue='N/A', FallbackValue='N/A'}" Width="150" />
+                        <DataGridTextColumn Header="Customer" Binding="{Binding CustomerName, TargetNullValue='Walk-in', FallbackValue='N/A'}" Width="*" />
+                        <DataGridTextColumn Header="Cashier" Binding="{Binding CashierName, TargetNullValue='N/A', FallbackValue='N/A'}" Width="140" />
+                        <DataGridTextColumn Header="Total Refund" Binding="{Binding TotalRefundAmount, StringFormat='৳{0:F2}', TargetNullValue='৳0.00', FallbackValue='৳0.00'}" Width="125" FontWeight="Bold" Foreground="#DC2626" />
+                        <DataGridTextColumn Header="Adjusted From Due (৳)" Binding="{Binding AdjustedFromCustomerDue, StringFormat='৳{0:F2}', TargetNullValue='৳0.00', FallbackValue='৳0.00'}" Width="160" />
+                        <DataGridTextColumn Header="Reason" Binding="{Binding ReturnReason, TargetNullValue='N/A', FallbackValue='N/A'}" Width="220" />
+                        <DataGridTextColumn Header="Date" Binding="{Binding CreatedAt, StringFormat='yyyy-MM-dd HH:mm', TargetNullValue='', FallbackValue=''}" Width="150" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

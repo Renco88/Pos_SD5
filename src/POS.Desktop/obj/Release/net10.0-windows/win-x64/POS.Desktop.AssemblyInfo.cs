@@ -10,12 +10,15 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("POS.Desktop")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("NexPOS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
+[assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © NexPOS 2026")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("Enterprise Point of Sale Solution with Inventory, CRM, Accounting & Finance")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1a19d4dcca55a70bdb771efad0425adeb349855")]
-[assembly: System.Reflection.AssemblyProductAttribute("POS.Desktop")]
-[assembly: System.Reflection.AssemblyTitleAttribute("POS.Desktop")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3950c73f47dc0b2f76dd4daba94131db42a66557")]
+[assembly: System.Reflection.AssemblyProductAttribute("NexPOS - Enterprise POS System")]
+[assembly: System.Reflection.AssemblyTrademarkAttribute("NexPOS™")]
+[assembly: System.Reflection.AssemblyTitleAttribute("NexPOS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

@@ -51,7 +51,7 @@ namespace POS.Desktop.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/POS.Desktop;component/views/posview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/NexPOS;V1.0.0.0;component/views/posview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Views\PosView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
