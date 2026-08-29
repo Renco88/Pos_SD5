@@ -60,7 +60,7 @@
         <Border Style="{StaticResource CardStyle}" Width="560" Margin="0,20,0,0">
             <StackPanel>
                 <TextBlock Text="Desktop &amp; Start Menu Shortcuts" Style="{StaticResource SectionTitleStyle}" Margin="0,0,0,4"/>
-                <TextBlock Text="Create one-click shortcuts for easy access." Style="{StaticResource MutedTextStyle}" Margin="0,0,0,16"/>
+                <TextBlock Text="Create one-click shortcuts for easy access." Style="{DynamicResource MutedCaptionStyle}" Margin="0,0,0,16"/>
 
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
@@ -69,8 +69,8 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0">
-                        <TextBlock Text="Status:" Style="{StaticResource SubheaderStyle}" FontSize="{StaticResource FontSizeSmall}" Margin="0,0,0,4"/>
-                        <TextBlock Text="{Binding ShortcutStatus, FallbackValue='Checking...'}" Style="{StaticResource MutedTextStyle}" FontWeight="SemiBold" FontSize="{StaticResource FontSizeBody}" TextWrapping="Wrap"/>
+                        <TextBlock Text="Status:" Style="{DynamicResource SubheaderStyle}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
+                        <TextBlock Text="{Binding ShortcutStatus, FallbackValue='Checking...'}" Style="{DynamicResource MutedCaptionStyle}" FontWeight="SemiBold" FontSize="{DynamicResource FontSizeBody}" TextWrapping="Wrap"/>
                     </StackPanel>
                 </Grid>
 
@@ -82,11 +82,11 @@
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="0" Content="📌  Create Desktop Shortcut"
                             Command="{Binding CreateDesktopShortcutCommand}"
-                            Style="{StaticResource OutlinedButtonStyle}"
+                            Style="{DynamicResource OutlinedButtonStyle}"
                             Height="40" />
                     <Button Grid.Column="2" Content="🗂️  Create Start Menu Shortcut"
                             Command="{Binding CreateStartMenuShortcutCommand}"
-                            Style="{StaticResource OutlinedButtonStyle}"
+                            Style="{DynamicResource OutlinedButtonStyle}"
                             Height="40" />
                 </Grid>
             </StackPanel>

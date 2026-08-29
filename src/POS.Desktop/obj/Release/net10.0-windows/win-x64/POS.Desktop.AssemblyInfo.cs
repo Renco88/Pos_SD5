@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright © NexPOS 2026")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Enterprise Point of Sale Solution with Inventory, CRM, Accounting & Finance")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3950c73f47dc0b2f76dd4daba94131db42a66557")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da4cc8f7aa1f449116a3f3eb12c7b2124746c368")]
 [assembly: System.Reflection.AssemblyProductAttribute("NexPOS - Enterprise POS System")]
 [assembly: System.Reflection.AssemblyTrademarkAttribute("NexPOS™")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NexPOS")]
